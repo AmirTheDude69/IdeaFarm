@@ -54,13 +54,13 @@ function addIdea({ title, body }) {
     drawing: drawings[Math.floor(Math.random() * drawings.length)],
     x: random(120, window.innerWidth - 120),
     y: random(120, window.innerHeight - 220),
-    vx: random(-0.35, 0.35),
-    vy: random(-0.35, 0.35),
+    vx: random(-0.7, 0.7),
+    vy: random(-0.7, 0.7),
     fulfilled: false,
   };
 
-  if (Math.abs(item.vx) < 0.1) item.vx = item.vx < 0 ? -0.18 : 0.18;
-  if (Math.abs(item.vy) < 0.1) item.vy = item.vy < 0 ? -0.18 : 0.18;
+  if (Math.abs(item.vx) < 0.15) item.vx = item.vx < 0 ? -0.3 : 0.3;
+  if (Math.abs(item.vy) < 0.15) item.vy = item.vy < 0 ? -0.3 : 0.3;
 
   ideas.push(item);
   renderIdeas();

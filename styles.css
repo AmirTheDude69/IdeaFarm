@@ -49,26 +49,31 @@ body {
   color: transparent;
   cursor: pointer;
   z-index: 2;
-  transition: transform 180ms ease, filter 180ms ease;
+  transition: transform 220ms ease, filter 220ms ease;
 }
 
 .idea-btn:hover {
   transform: translateX(-50%) rotate(-2deg) scale(1.08);
-  filter: drop-shadow(0 0 0 #000) drop-shadow(0 0 12px #f4e16dcc);
+  filter: drop-shadow(0 4px 0 #0b0b0bcc) drop-shadow(0 0 18px #f4e16d);
 }
 
 .idea-btn:hover::after {
   content: "";
   position: absolute;
-  inset: -18px;
+  inset: -20px;
   border-radius: 999px;
-  border: 6px dashed #131313;
-  animation: spin 6s linear infinite;
+  background:
+    conic-gradient(from 0deg, #2c6a33, #6cc43c, #2c6a33, #f4e16d, #2c6a33);
+  -webkit-mask: radial-gradient(circle, transparent 62%, #000 64%);
+  mask: radial-gradient(circle, transparent 62%, #000 64%);
+  opacity: 0.9;
+  animation: bloom 1.2s ease-in-out infinite;
 }
 
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes bloom {
+  0% { transform: scale(0.98) rotate(0deg); filter: blur(0px); }
+  50% { transform: scale(1.04) rotate(10deg); filter: blur(0.4px); }
+  100% { transform: scale(0.98) rotate(-6deg); filter: blur(0px); }
 }
 
 #ideasLayer { position: absolute; inset: 0; }
@@ -83,18 +88,34 @@ body {
 }
 
 .creature {
-  width: 96px;
-  height: 96px;
+  width: 116px;
+  height: 116px;
   display: grid;
   place-items: center;
-  filter: drop-shadow(0 2px 0 #0008);
+  filter: drop-shadow(0 3px 0 #0008);
+  transition: transform 200ms ease, filter 200ms ease;
 }
 
 .creature-img {
-  width: 96px;
-  height: 96px;
+  width: 116px;
+  height: 116px;
   object-fit: contain;
   image-rendering: auto;
+}
+
+.idea-item:hover .creature {
+  transform: scale(1.08) rotate(-2deg);
+  filter: drop-shadow(0 4px 0 #000a) drop-shadow(0 0 12px #f4e16d88);
+}
+
+.idea-item:hover .creature-img {
+  animation: floaty 900ms ease-in-out infinite;
+}
+
+@keyframes floaty {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
 }
 
 .idea-label {
@@ -103,7 +124,7 @@ body {
   border-radius: 999px;
   background: #f5efe2;
   box-shadow: 0 2px 0 #0002;
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .idea-item.fulfilled .creature {

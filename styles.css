@@ -60,20 +60,24 @@ body {
 .idea-btn:hover::after {
   content: "";
   position: absolute;
-  inset: -20px;
+  inset: -22px;
   border-radius: 999px;
   background:
-    conic-gradient(from 0deg, #2c6a33, #6cc43c, #2c6a33, #f4e16d, #2c6a33);
-  -webkit-mask: radial-gradient(circle, transparent 62%, #000 64%);
-  mask: radial-gradient(circle, transparent 62%, #000 64%);
-  opacity: 0.9;
-  animation: bloom 1.2s ease-in-out infinite;
+    radial-gradient(circle at 20% 30%, #fff5b8 0 14px, transparent 15px),
+    radial-gradient(circle at 76% 18%, #fff5b8 0 10px, transparent 11px),
+    radial-gradient(circle at 84% 72%, #fff5b8 0 12px, transparent 13px),
+    radial-gradient(circle at 16% 78%, #fff5b8 0 10px, transparent 11px),
+    radial-gradient(circle, #5bc24a 0 55%, transparent 58%),
+    radial-gradient(circle, #2b7a32 0 63%, transparent 66%);
+  filter: drop-shadow(0 0 10px #f5e27a);
+  opacity: 0.95;
+  animation: twinkle-ring 1.4s ease-in-out infinite;
 }
 
-@keyframes bloom {
-  0% { transform: scale(0.98) rotate(0deg); filter: blur(0px); }
-  50% { transform: scale(1.04) rotate(10deg); filter: blur(0.4px); }
-  100% { transform: scale(0.98) rotate(-6deg); filter: blur(0px); }
+@keyframes twinkle-ring {
+  0% { transform: scale(0.98) rotate(0deg); }
+  50% { transform: scale(1.04) rotate(6deg); }
+  100% { transform: scale(0.98) rotate(-4deg); }
 }
 
 #ideasLayer { position: absolute; inset: 0; }

@@ -16,6 +16,8 @@ const fulfillBtn = document.getElementById('fulfillBtn');
 const deleteBtn = document.getElementById('deleteBtn');
 const closeViewBtn = document.getElementById('closeViewBtn');
 
+const STORAGE_KEY = 'ideaFarm.v1';
+
 const drawingCount = 15;
 const drawings = Array.from({ length: drawingCount }, (_, idx) => (
   `./assets/idea-drawings/idea-${String(idx + 1).padStart(2, '0')}.png`
@@ -47,11 +49,13 @@ function showPoof() {
 }
 
 function addIdea({ title, body }) {
+  const drawing = drawings[Math.floor(Math.random() * drawings.length)];
+
   const item = {
     id: idCounter++,
     title: title.trim() || `Idea ${idCounter}`,
     body: body.trim(),
-    drawing: drawings[Math.floor(Math.random() * drawings.length)],
+    drawing,
     x: random(120, window.innerWidth - 120),
     y: random(120, window.innerHeight - 220),
     vx: random(-0.7, 0.7),
@@ -64,6 +68,7 @@ function addIdea({ title, body }) {
 
   ideas.push(item);
   renderIdeas();
+  persistIdeas();
 }
 
 function renderIdeas() {
@@ -115,6 +120,7 @@ function updateOpenIdea(nextFields) {
 
   ideas[idx] = { ...ideas[idx], ...nextFields };
   renderIdeas();
+  persistIdeas();
 }
 
 ideaBtn.addEventListener('click', () => {
@@ -150,6 +156,7 @@ deleteBtn.addEventListener('click', () => {
   ideas.splice(idx, 1);
   closeModal(viewModal);
   renderIdeas();
+  persistIdeas();
 });
 
 fulfillBtn.addEventListener('click', () => {
@@ -184,6 +191,58 @@ fullscreenBtn.addEventListener('click', async () => {
   }
   await document.exitFullscreen();
 });
+
+function persistIdeas() {
+  const payload = {
+    idCounter,
+    ideas: ideas.map(({ id, title, body, drawing, x, y, vx, vy, fulfilled }) => ({
+      id,
+      title,
+      body,
+      drawing,
+      x,
+      y,
+      vx,
+      vy,
+      fulfilled,
+    })),
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+}
+
+function restoreIdeas() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    if (!data || !Array.isArray(data.ideas)) return;
+
+    ideas.length = 0;
+    data.ideas.forEach((idea) => {
+      if (!idea || typeof idea !== 'object') return;
+      ideas.push({
+        id: Number(idea.id) || idCounter++,
+        title: idea.title || 'Untitled Idea',
+        body: idea.body || '',
+        drawing: idea.drawing || drawings[Math.floor(Math.random() * drawings.length)],
+        x: Number(idea.x) || random(140, window.innerWidth - 140),
+        y: Number(idea.y) || random(140, window.innerHeight - 240),
+        vx: Number(idea.vx) || random(-0.7, 0.7),
+        vy: Number(idea.vy) || random(-0.7, 0.7),
+        fulfilled: Boolean(idea.fulfilled),
+      });
+    });
+    idCounter = Math.max(
+      Number(data.idCounter) || idCounter,
+      ideas.reduce((max, idea) => Math.max(max, idea.id), 0) + 1
+    );
+    renderIdeas();
+  } catch (err) {
+    console.warn('Failed to restore ideas', err);
+  }
+}
+
+restoreIdeas();
 
 function tick() {
   const min = 80;

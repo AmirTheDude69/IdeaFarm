@@ -83,10 +83,18 @@ body {
 }
 
 .creature {
-  font-size: 88px;
-  line-height: 1;
-  text-shadow: 2px 2px 0 #0005;
+  width: 96px;
+  height: 96px;
+  display: grid;
+  place-items: center;
   filter: drop-shadow(0 2px 0 #0008);
+}
+
+.creature-img {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  image-rendering: auto;
 }
 
 .idea-label {

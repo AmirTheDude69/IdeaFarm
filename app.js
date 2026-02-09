@@ -16,7 +16,10 @@ const fulfillBtn = document.getElementById('fulfillBtn');
 const deleteBtn = document.getElementById('deleteBtn');
 const closeViewBtn = document.getElementById('closeViewBtn');
 
-const drawings = ['🐱', '🐶', '🐭', '🐰', '🐳', '🦄', '🐞', '🍎', '🍅', '👾', '🐨'];
+const drawingCount = 15;
+const drawings = Array.from({ length: drawingCount }, (_, idx) => (
+  `./assets/idea-drawings/idea-${String(idx + 1).padStart(2, '0')}.png`
+));
 const ideas = [];
 let openIdeaId = null;
 let idCounter = 1;
@@ -48,7 +51,7 @@ function addIdea({ title, body }) {
     id: idCounter++,
     title: title.trim() || `Idea ${idCounter}`,
     body: body.trim(),
-    emoji: drawings[Math.floor(Math.random() * drawings.length)],
+    drawing: drawings[Math.floor(Math.random() * drawings.length)],
     x: random(120, window.innerWidth - 120),
     y: random(120, window.innerHeight - 220),
     vx: random(-0.35, 0.35),
@@ -75,7 +78,13 @@ function renderIdeas() {
 
     const creature = document.createElement('div');
     creature.className = 'creature';
-    creature.textContent = idea.emoji;
+
+    const creatureImg = document.createElement('img');
+    creatureImg.className = 'creature-img';
+    creatureImg.src = idea.drawing;
+    creatureImg.alt = idea.title || 'Idea drawing';
+
+    creature.append(creatureImg);
 
     const label = document.createElement('div');
     label.className = 'idea-label';

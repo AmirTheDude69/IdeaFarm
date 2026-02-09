@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Idea Farm</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main id="farm" aria-label="Idea Farm canvas">
+      <button id="fullscreenBtn" class="icon-btn" title="Toggle fullscreen">⤢</button>
+
+      <button id="ideaBtn" class="idea-btn">idea</button>
+
+      <section id="createModal" class="modal hidden" aria-hidden="true">
+        <div class="modal-card">
+          <button class="close-btn" data-close="createModal">✕</button>
+          <input id="ideaTitle" type="text" placeholder="Title (optional)" maxlength="80" />
+          <textarea id="ideaBody" placeholder="Write your idea here..." maxlength="400"></textarea>
+          <button id="saveIdeaBtn" class="save-btn">Save</button>
+        </div>
+      </section>
+
+      <section id="viewModal" class="modal hidden" aria-hidden="true">
+        <div class="modal-card detail-card">
+          <button class="close-btn" data-close="viewModal">✕</button>
+          <input id="viewTitle" type="text" readonly />
+          <textarea id="viewBody" readonly></textarea>
+          <div class="actions">
+            <button id="fulfillBtn" class="ok-btn">✓</button>
+            <button id="closeViewBtn" class="neutral-btn">Close</button>
+            <button id="editBtn" class="save-btn">Edit</button>
+            <button id="deleteBtn" class="delete-btn">Delete</button>
+          </div>
+        </div>
+      </section>
+
+      <div id="poof" class="poof hidden" aria-hidden="true">POOF</div>
+      <div id="ideasLayer"></div>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

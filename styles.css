@@ -1,0 +1,244 @@
+:root {
+  --bg: #43a349;
+  --flower: #e9cb52;
+  --ink: #122d20;
+  --cream: #ece8d8;
+  --orange: #f1a318;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+  color: #2d3b43;
+}
+
+#farm {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 14px 14px, var(--flower) 2px, transparent 3px),
+    radial-gradient(circle at 10px 10px, #2d7f3f 2px, transparent 4px),
+    radial-gradient(circle at 0 0, #2d7f3f 2px, transparent 3px),
+    var(--bg);
+  background-size: 180px 180px, 180px 180px, 58px 58px, auto;
+}
+
+.icon-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 3;
+  border: 0;
+  border-radius: 12px;
+  width: 38px;
+  height: 38px;
+  background: #fff8;
+  cursor: pointer;
+}
+
+.idea-btn {
+  position: absolute;
+  left: 50%;
+  bottom: 12%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  border: 5px solid #16150f;
+  background: var(--orange);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: 1px;
+  cursor: pointer;
+  z-index: 2;
+  transition: transform 180ms ease, filter 180ms ease;
+}
+
+.idea-btn:hover {
+  transform: translateX(-50%) rotate(-2deg) scale(1.08);
+  filter: drop-shadow(0 0 0 #000) drop-shadow(0 0 12px #f4e16dcc);
+}
+
+.idea-btn:hover::after {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  border-radius: 999px;
+  border: 6px dashed #131313;
+  animation: spin 6s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+#ideasLayer { position: absolute; inset: 0; }
+
+.idea-item {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.creature {
+  font-size: 88px;
+  line-height: 1;
+  text-shadow: 2px 2px 0 #0005;
+  filter: drop-shadow(0 2px 0 #0008);
+}
+
+.idea-label {
+  margin-top: 4px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: #f5efe2;
+  box-shadow: 0 2px 0 #0002;
+  font-size: 22px;
+}
+
+.idea-item.fulfilled .creature {
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.idea-item.fulfilled::before {
+  content: "✨";
+  position: absolute;
+  top: -28px;
+  left: 14px;
+  font-size: 26px;
+  animation: twinkle 900ms ease-in-out infinite alternate;
+}
+
+.idea-item.fulfilled::after {
+  content: "✨";
+  position: absolute;
+  right: 0;
+  top: 26px;
+  font-size: 22px;
+  animation: twinkle 900ms ease-in-out infinite alternate-reverse;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+
+@keyframes twinkle {
+  from { opacity: .35; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1.15); }
+}
+
+.modal {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #00000033;
+  z-index: 5;
+}
+ .hidden { display: none !important; }
+
+.modal-card {
+  position: relative;
+  width: min(640px, 92vw);
+  min-height: 370px;
+  background: var(--cream);
+  border-radius: 14px;
+  box-shadow: 0 8px 34px #0c261633;
+  padding: 28px 40px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-size: 32px;
+  color: #44586c;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+input, textarea {
+  width: 100%;
+  border: 0;
+  border-bottom: 3px solid #ccd2dc;
+  font-family: inherit;
+  background: transparent;
+  font-size: 38px;
+  padding: 8px 4px;
+  color: #2e4152;
+}
+
+textarea {
+  min-height: 150px;
+  resize: none;
+  margin-top: 22px;
+  border-bottom: 0;
+  font-size: 42px;
+}
+
+.save-btn, .delete-btn, .neutral-btn, .ok-btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 30px;
+  font-size: 34px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.save-btn { background: #f59b0f; color: #fff; }
+.delete-btn { background: #f88b9b; color: #fff; }
+.neutral-btn { background: #cdd3de; }
+.ok-btn { background: #10be58; color: #fff; }
+
+#saveIdeaBtn { margin-top: 12px; }
+
+.detail-card { min-height: 320px; }
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.poof {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  bottom: 19%;
+  transform: translateX(-50%);
+  width: 270px;
+  height: 220px;
+  border-radius: 50%;
+  background: #c3c5c8;
+  color: #6e7078;
+  display: grid;
+  place-items: center;
+  font-size: 56px;
+  font-weight: 700;
+  border: 10px solid #8d8f95;
+  animation: poof 900ms ease forwards;
+}
+
+@keyframes poof {
+  from { opacity: 0; transform: translateX(-50%) scale(.2); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.15); }
+  to { opacity: 0; transform: translateX(-50%) scale(1.4); }
+}
+
+@media (max-width: 900px) {
+  .creature { font-size: 64px; }
+  .idea-label { font-size: 16px; }
+  input { font-size: 26px; }
+  textarea { font-size: 30px; }
+  .save-btn, .delete-btn, .neutral-btn, .ok-btn { font-size: 24px; }
+}

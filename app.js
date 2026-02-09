@@ -266,5 +266,4 @@ function tick() {
   requestAnimationFrame(tick);
 }
 
-addIdea({ title: 'grocery', body: 'Get food and snacks for this week.' });
 requestAnimationFrame(tick);

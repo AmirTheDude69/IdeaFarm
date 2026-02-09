@@ -49,35 +49,47 @@ body {
   color: transparent;
   cursor: pointer;
   z-index: 2;
-  transition: transform 220ms ease, filter 220ms ease;
+  transition: filter 220ms ease;
+  will-change: transform, filter;
 }
 
 .idea-btn:hover {
-  transform: translateX(-50%) rotate(-2deg) scale(1.08);
-  filter: drop-shadow(0 4px 0 #0b0b0bcc) drop-shadow(0 0 18px #f4e16d);
+  filter: drop-shadow(0 4px 0 #0b0b0bcc) drop-shadow(0 0 16px #f4e16d);
+  animation: heartbeat 1.15s ease-in-out infinite;
 }
 
 .idea-btn:hover::after {
   content: "";
   position: absolute;
-  inset: -22px;
+  inset: -26px;
   border-radius: 999px;
   background:
-    radial-gradient(circle at 20% 30%, #fff5b8 0 14px, transparent 15px),
-    radial-gradient(circle at 76% 18%, #fff5b8 0 10px, transparent 11px),
-    radial-gradient(circle at 84% 72%, #fff5b8 0 12px, transparent 13px),
-    radial-gradient(circle at 16% 78%, #fff5b8 0 10px, transparent 11px),
-    radial-gradient(circle, #5bc24a 0 55%, transparent 58%),
-    radial-gradient(circle, #2b7a32 0 63%, transparent 66%);
-  filter: drop-shadow(0 0 10px #f5e27a);
+    radial-gradient(circle at 16% 18%, #fff7b0 0 6px, transparent 7px),
+    radial-gradient(circle at 84% 16%, #fff7b0 0 5px, transparent 6px),
+    radial-gradient(circle at 86% 78%, #fff7b0 0 6px, transparent 7px),
+    radial-gradient(circle at 18% 82%, #fff7b0 0 5px, transparent 6px),
+    radial-gradient(circle at 50% 6%, #fffbe6 0 4px, transparent 5px),
+    radial-gradient(circle at 94% 48%, #fffbe6 0 4px, transparent 5px),
+    radial-gradient(circle at 6% 52%, #fffbe6 0 4px, transparent 5px),
+    radial-gradient(circle at 52% 94%, #fffbe6 0 4px, transparent 5px);
+  filter: drop-shadow(0 0 8px #f5e27a);
   opacity: 0.95;
-  animation: twinkle-ring 1.4s ease-in-out infinite;
+  animation: sparkle 1.1s ease-in-out infinite;
+  pointer-events: none;
 }
 
-@keyframes twinkle-ring {
-  0% { transform: scale(0.98) rotate(0deg); }
-  50% { transform: scale(1.04) rotate(6deg); }
-  100% { transform: scale(0.98) rotate(-4deg); }
+@keyframes heartbeat {
+  0% { transform: translateX(-50%) scale(1); }
+  20% { transform: translateX(-50%) scale(1.08) rotate(-1.5deg); }
+  40% { transform: translateX(-50%) scale(0.98); }
+  60% { transform: translateX(-50%) scale(1.06) rotate(1deg); }
+  100% { transform: translateX(-50%) scale(1); }
+}
+
+@keyframes sparkle {
+  0% { transform: scale(0.96) rotate(0deg); opacity: 0.85; }
+  50% { transform: scale(1.05) rotate(8deg); opacity: 1; }
+  100% { transform: scale(0.96) rotate(-6deg); opacity: 0.9; }
 }
 
 #ideasLayer { position: absolute; inset: 0; }

@@ -19,12 +19,7 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 14px 14px, var(--flower) 2px, transparent 3px),
-    radial-gradient(circle at 10px 10px, #2d7f3f 2px, transparent 4px),
-    radial-gradient(circle at 0 0, #2d7f3f 2px, transparent 3px),
-    var(--bg);
-  background-size: 180px 180px, 180px 180px, 58px 58px, auto;
+  background: var(--bg) url("./assets/farm-bg.png") center / cover no-repeat;
 }
 
 .icon-btn {

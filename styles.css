@@ -273,10 +273,97 @@ textarea {
   to { opacity: 0; transform: translateX(-50%) scale(1.4); }
 }
 
+#celebrationLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.celebration-bubble {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  max-width: min(640px, 78vw);
+  padding: 14px 26px;
+  border-radius: 999px;
+  border: 4px solid #d8dded;
+  background: #fffdf6;
+  color: #24384b;
+  text-align: center;
+  font-size: 28px;
+  line-height: 1.15;
+  box-shadow: 0 8px 24px #00000022;
+  animation: celebrate-cloud 1.8s ease forwards;
+}
+
+.celebration-bubble::before,
+.celebration-bubble::after {
+  content: "";
+  position: absolute;
+  background: #fffdf6;
+  border: 4px solid #d8dded;
+  border-radius: 999px;
+}
+
+.celebration-bubble::before {
+  width: 38px;
+  height: 38px;
+  left: 14px;
+  bottom: -20px;
+}
+
+.celebration-bubble::after {
+  width: 24px;
+  height: 24px;
+  left: 44px;
+  bottom: -34px;
+}
+
+.celebration-sparkles {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 220px;
+  height: 220px;
+  background:
+    radial-gradient(circle at 50% 4%, #fff8be 0 7px, transparent 8px),
+    radial-gradient(circle at 94% 50%, #fff8be 0 6px, transparent 7px),
+    radial-gradient(circle at 50% 96%, #fff8be 0 7px, transparent 8px),
+    radial-gradient(circle at 6% 48%, #fff8be 0 6px, transparent 7px),
+    radial-gradient(circle at 18% 20%, #ffe88b 0 5px, transparent 6px),
+    radial-gradient(circle at 82% 20%, #ffe88b 0 5px, transparent 6px),
+    radial-gradient(circle at 82% 80%, #ffe88b 0 5px, transparent 6px),
+    radial-gradient(circle at 18% 80%, #ffe88b 0 5px, transparent 6px);
+  opacity: 0;
+  filter: drop-shadow(0 0 5px #ffe177);
+  animation: sparkle-burst 900ms ease-out forwards;
+}
+
+@keyframes celebrate-cloud {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.55); }
+  18% { opacity: 1; transform: translate(-50%, -56%) scale(1.05); }
+  72% { opacity: 1; transform: translate(-50%, -62%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -76%) scale(0.98); }
+}
+
+@keyframes sparkle-burst {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.45) rotate(0deg); }
+  30% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(8deg); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.3) rotate(-8deg); }
+}
+
 @media (max-width: 900px) {
-  .creature { font-size: 64px; }
+  .creature {
+    width: 88px;
+    height: 88px;
+  }
+  .creature-img {
+    width: 88px;
+    height: 88px;
+  }
   .idea-label { font-size: 16px; }
   input { font-size: 26px; }
   textarea { font-size: 30px; }
   .save-btn, .delete-btn, .neutral-btn, .ok-btn { font-size: 24px; }
+  .celebration-bubble { font-size: 21px; }
 }

@@ -3,6 +3,7 @@ const fullscreenBtn = document.getElementById('fullscreenBtn');
 const createModal = document.getElementById('createModal');
 const viewModal = document.getElementById('viewModal');
 const poof = document.getElementById('poof');
+const celebrationLayer = document.getElementById('celebrationLayer');
 const ideasLayer = document.getElementById('ideasLayer');
 
 const ideaTitle = document.getElementById('ideaTitle');
@@ -22,12 +23,30 @@ const drawingCount = 15;
 const drawings = Array.from({ length: drawingCount }, (_, idx) => (
   `./assets/idea-drawings/idea-${String(idx + 1).padStart(2, '0')}.png`
 ));
+const celebrationPhrases = [
+  'You Rock!',
+  'You De best!',
+  'That was awesome!',
+  'Keep it going dude!',
+  'That was mad impressive!',
+  'You are so inspiring!',
+  'I wish I was half as cool as you!',
+  'How is so much awesomeness possible?',
+  'Where do you fit all that coolness?',
+  "You're a machine!",
+  'Kudos to you!',
+  'I tip my hat off to you!',
+];
 const ideas = [];
 let openIdeaId = null;
 let idCounter = 1;
 
 function random(min, max) {
   return Math.random() * (max - min) + min;
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
 }
 
 function openModal(modal) {
@@ -46,6 +65,29 @@ function showPoof() {
   poof.offsetHeight;
   poof.style.animation = '';
   setTimeout(() => poof.classList.add('hidden'), 900);
+}
+
+function showCelebration(x, y) {
+  const phrase = celebrationPhrases[Math.floor(Math.random() * celebrationPhrases.length)];
+  const safeX = clamp(x, 180, window.innerWidth - 180);
+  const safeY = clamp(y - 120, 110, window.innerHeight - 120);
+
+  const bubble = document.createElement('div');
+  bubble.className = 'celebration-bubble';
+  bubble.textContent = phrase;
+  bubble.style.left = `${safeX}px`;
+  bubble.style.top = `${safeY}px`;
+
+  const sparkles = document.createElement('div');
+  sparkles.className = 'celebration-sparkles';
+  sparkles.style.left = `${safeX}px`;
+  sparkles.style.top = `${safeY}px`;
+
+  celebrationLayer.append(sparkles, bubble);
+  setTimeout(() => {
+    bubble.remove();
+    sparkles.remove();
+  }, 1800);
 }
 
 function addIdea({ title, body }) {
@@ -162,7 +204,11 @@ deleteBtn.addEventListener('click', () => {
 fulfillBtn.addEventListener('click', () => {
   const idea = ideas.find((entry) => entry.id === openIdeaId);
   if (!idea) return;
-  updateOpenIdea({ fulfilled: !idea.fulfilled });
+  const { x, y } = idea;
+  const nextFulfilled = !idea.fulfilled;
+  updateOpenIdea({ fulfilled: nextFulfilled });
+  closeModal(viewModal);
+  if (nextFulfilled) showCelebration(x, y);
 });
 
 editBtn.addEventListener('click', () => {
